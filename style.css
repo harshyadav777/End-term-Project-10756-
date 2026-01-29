@@ -1,0 +1,613 @@
+/* ================================================
+   CSS VARIABLES FOR EASY COLOR CUSTOMIZATION
+   ================================================ */
+:root {
+    /* Background Colors */
+    --bg-primary: #faf8ef;
+    --bg-grid: #bbada0;
+    --bg-tile-empty: #cdc1b4;
+
+    /* Tile Colors */
+    --tile-2: #eee4da;
+    --tile-4: #ede0c8;
+    --tile-8: #f2b179;
+    --tile-16: #f59563;
+    --tile-32: #f67c5f;
+    --tile-64: #f65e3b;
+    --tile-128: #edcf72;
+    --tile-256: #edcc61;
+    --tile-512: #edc850;
+    --tile-1024: #edc53f;
+    --tile-2048: #edc22e;
+
+    /* Text Colors */
+    --text-dark: #776e65;
+    --text-light: #f9f6f2;
+    --text-white: #ffffff;
+
+    /* UI Colors */
+    --score-bg: #8f7a66;
+    --button-bg: #8f7a66;
+    --button-hover: #9f8a76;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+
+    /* Success/Error Colors */
+    --success-color: #6aaa64;
+    --error-color: #e74c3c;
+    --warning-color: #f39c12;
+
+    /* Animation Colors */
+    --glow-color: #ffd700;
+    --particle-color: #ff6b6b;
+}
+
+/* ================================================
+   RESET & BASE STYLES
+   ================================================ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(135deg, var(--bg-primary) 0%, #f5e9d4 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* ================================================
+   GAME CONTAINER
+   ================================================ */
+.container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* ================================================
+   HEADER SECTION
+   ================================================ */
+h1 {
+    font-size: 80px;
+    font-weight: bold;
+    line-height: 1;
+    color: var(--text-dark);
+    margin: 0;
+    text-shadow: 2px 2px 4px var(--shadow-color);
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+/* ================================================
+   SCORE CONTAINER
+   ================================================ */
+.score-container {
+    position: relative;
+    text-align: center;
+    min-width: 80px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: var(--score-bg);
+    color: var(--text-white);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+.score-container.new-record {
+    animation: recordPulse 0.6s ease;
+    background: linear-gradient(135deg, var(--glow-color), var(--score-bg));
+}
+
+@keyframes recordPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.score-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 5px;
+    opacity: 0.9;
+}
+
+#score {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* ================================================
+   STATS PANEL
+   ================================================ */
+.stats-panel {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+    min-width: 70px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: var(--score-bg);
+    color: var(--text-white);
+    box-shadow: 0 2px 6px var(--shadow-color);
+}
+
+.stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+    opacity: 0.85;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ================================================
+   RESULT MESSAGE
+   ================================================ */
+#result {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+/* ================================================
+   CONTROLS PANEL
+   ================================================ */
+.controls-panel {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.game-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-white);
+    background-color: var(--button-bg);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px var(--shadow-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.game-btn:hover:not(:disabled) {
+    background-color: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.game-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.game-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ================================================
+   GAME GRID
+   ================================================ */
+.grid {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 470px;
+    aspect-ratio: 1;
+    background-color: var(--bg-grid);
+    border: 7px solid var(--bg-grid);
+    border-radius: 10px;
+    margin: 0 auto;
+    box-shadow: 0 4px 16px var(--shadow-color);
+}
+
+/* ================================================
+   TILES
+   ================================================ */
+.grid div,
+.tile {
+    width: calc(25% - 14px);
+    aspect-ratio: 1;
+    margin: 7px;
+    border-radius: 6px;
+    background-color: var(--bg-tile-empty);
+    color: var(--text-dark);
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tile.empty-tile {
+    font-size: 0;
+}
+
+/* Tile Animation */
+.tile-new {
+    animation: tileAppear 0.2s ease;
+}
+
+@keyframes tileAppear {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ================================================
+   PARTICLE EFFECTS
+   ================================================ */
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.particle-spawn {
+    background-color: var(--success-color);
+    animation: particleSpawn 0.6s ease-out forwards;
+}
+
+.particle-merge {
+    background-color: var(--particle-color);
+    animation: particleMerge 0.6s ease-out forwards;
+}
+
+@keyframes particleSpawn {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes particleMerge {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* ================================================
+   SCORE POPUP
+   ================================================ */
+.score-popup {
+    position: absolute;
+    top: -40px;
+    right: 50%;
+    transform: translateX(50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--success-color);
+    animation: scorePopup 1s ease-out forwards;
+    pointer-events: none;
+    z-index: 1000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.combo-text {
+    color: var(--warning-color);
+    font-size: 18px;
+    margin-left: 5px;
+}
+
+@keyframes scorePopup {
+    0% {
+        opacity: 1;
+        transform: translateX(50%) translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(50%) translateY(-30px);
+    }
+}
+
+/* ================================================
+   GAME END OVERLAY
+   ================================================ */
+.game-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.end-screen {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.win-screen {
+    border: 4px solid var(--success-color);
+}
+
+.lose-screen {
+    border: 4px solid var(--error-color);
+}
+
+.end-screen h2 {
+    font-size: 36px;
+    margin-bottom: 25px;
+    color: var(--text-dark);
+}
+
+.final-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.final-stats .stat {
+    background-color: var(--bg-primary);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+.final-stats .stat strong {
+    display: block;
+    font-size: 20px;
+    margin-top: 5px;
+    color: var(--score-bg);
+}
+
+.restart-big-btn {
+    margin-top: 20px;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-white);
+    background: linear-gradient(135deg, var(--button-bg), var(--button-hover));
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.restart-big-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow-color);
+}
+
+/* ================================================
+   FIREWORKS
+   ================================================ */
+.firework {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: firework 1s ease-out forwards;
+    pointer-events: none;
+    z-index: 10001;
+}
+
+@keyframes firework {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(3);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(5);
+        opacity: 0;
+    }
+}
+
+/* ================================================
+   HINT OVERLAY
+   ================================================ */
+.hint-overlay {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateX(-50%) translateY(-100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+.hint-message {
+    background: linear-gradient(135deg, var(--warning-color), #f5b041);
+    color: var(--text-white);
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hint-message strong {
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+/* ================================================
+   RESPONSIVE DESIGN
+   ================================================ */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 60px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .grid {
+        max-width: 100%;
+    }
+
+    .grid div,
+    .tile {
+        font-size: 40px;
+    }
+
+    .controls-panel {
+        flex-direction: column;
+    }
+
+    .game-btn {
+        width: 100%;
+    }
+
+    .stats-panel {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 50px;
+    }
+
+    .grid div,
+    .tile {
+        font-size: 32px;
+    }
+
+    .end-screen {
+        padding: 25px;
+    }
+
+    .end-screen h2 {
+        font-size: 28px;
+    }
+
+    .final-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ================================================
+   ACCESSIBILITY
+   ================================================ */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
